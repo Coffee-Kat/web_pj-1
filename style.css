@@ -26,3 +26,34 @@ header {
     border: none;
     cursor: pointer;
 }
+
+.section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.tournaments {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background: #1c1f3a;
+    margin: 15px;
+    padding: 20px;
+    width: 260px;
+    border-radius: 10px;
+}
+
+.match {
+    background: #2a2d4a;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+}
