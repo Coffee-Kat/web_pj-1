@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f1123;
+    color: white;
+}
+
+header {
+    padding: 20px;
+}
+
+.hero {
+    height: 90vh;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    url('https://images.unsplash.com/photo-1542751371-adc38448a05e') center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.btn {
+    background: #00ffd5;
+    padding: 12px 25px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+}
