@@ -13,12 +13,11 @@
     <h2>ESPORTS HUB</h2>
 </header>
 
-<!-- HERO -->
 <section class="hero">
     <div>
         <h1>TOURNAMENT PLATFORM</h1>
 
-        <select id="gameSelect">
+        <select>
             <option>Valorant</option>
             <option>CS2</option>
             <option>Minecraft</option>
@@ -31,48 +30,44 @@
     </div>
 </section>
 
-<!-- ТУРНІРИ -->
-<section class="section" id="tournaments">
+<section class="section">
     <h2>Active Tournaments</h2>
-    <div class="tournaments" id="tournamentList"></div>
+    <div class="tournaments"></div>
 </section>
 
-<!-- BRACKET -->
 <section class="section">
     <h2>Bracket (Double Elimination)</h2>
-    <div class="bracket" id="bracket"></div>
+    <div class="bracket"></div>
 </section>
 
-<!-- TEAMS -->
 <section class="section">
     <h2>Teams</h2>
-    <div id="teams" class="tournaments"></div>
+    <div class="tournaments"></div>
 </section>
 
-<footer class="footer">
-    <p>© 2026 Esports Platform</p>
-</footer>
-
-<!-- ADMIN PANEL -->
 <section class="section">
     <h2>Admin Panel</h2>
 
-    <input id="name" placeholder="Tournament name"><br><br>
+    <input placeholder="Tournament name"><br><br>
 
-    <select id="game">
+    <select>
         <option>Valorant</option>
         <option>CS2</option>
         <option>Minecraft</option>
     </select><br><br>
 
-    <input id="date" placeholder="Date"><br><br>
-    <input id="format" placeholder="Format (5v5 / 1v1)"><br><br>
-    <input id="prize" placeholder="Prize"><br><br>
+    <input placeholder="Date"><br><br>
+    <input placeholder="Format (5v5 / 1v1)"><br><br>
+    <input placeholder="Prize"><br><br>
 
-    <textarea id="teamsInput" placeholder="Teams (через кому)"></textarea><br><br>
+    <textarea placeholder="Teams (через кому)"></textarea><br><br>
 
     <button class="btn" onclick="createTournament()">Create Tournament</button>
 </section>
+
+<footer class="footer">
+    <p>© 2026 Esports Platform</p>
+</footer>
 
 <script src="script.js"></script>
 
