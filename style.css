@@ -358,6 +358,10 @@ header {
     text-align: center;
 }
 
+h1, h2 {
+    letter-spacing: 2px;
+}
+
 .hero {
     height: 90vh;
     background:
@@ -388,7 +392,7 @@ header {
     text-align: center;
 }
 
-.tournaments {
+.tournaments, .teams {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -400,6 +404,11 @@ header {
     padding: 20px;
     width: 260px;
     border-radius: 10px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .bracket {
