@@ -1,6 +1,6 @@
 # web\_pj-1
 
-![header img](assets\readme_header.jpg)
+![header img](https://github.com/Coffee-Kat/web_pj-1/blob/main/assets/readme_header.jpg?raw=true)
 * Author: Kosto Artem
 * [Frame of project](https://weblium.com/templates/demo/esports-championship-website-design-293)
 > [!NOTE]
