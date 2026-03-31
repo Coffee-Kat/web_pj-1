@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Приклад семантичної структури HTML5">
+    <title>Семантична структура сайту</title>
+</head>
+
+<body>
+
+<!-- ШАПКА САЙТУ -->
+<header>
+    <h1>Мій сайт</h1>
+
+    <!-- Навігація -->
+    <nav aria-label="Головне меню">
+        <ul>
+            <li><a href="#">Головна</a></li>
+            <li><a href="#">Новини</a></li>
+            <li><a href="#">Статті</a></li>
+            <li><a href="#">Про нас</a></li>
+            <li><a href="#">Контакти</a></li>
+        </ul>
+    </nav>
+
+    <!-- Пошук -->
+    <form role="search">
+        <input type="text" placeholder="Пошук...">
+        <button type="submit">Знайти</button>
+    </form>
+</header>
+
+<!-- ОСНОВНИЙ КОНТЕНТ -->
+<main>
+
+    <!-- СЕКЦІЯ СТАТЕЙ -->
+    <section>
+        <h2>Останні статті</h2>
+
+        <!-- Стаття 1 -->
+        <article>
+            <h3>Перша стаття</h3>
+            <p>Це приклад тексту першої статті. Вона містить основну інформацію для користувача.</p>
+        </article>
+
+        <!-- Стаття 2 -->
+        <article>
+            <h3>Друга стаття</h3>
+            <p>Це приклад тексту другої статті. Вона також є незалежним контентом.</p>
+        </article>
+
+        <!-- Стаття 3 -->
+        <article>
+            <h3>Третя стаття</h3>
+            <p>Ще один приклад статті для демонстрації структури сайту.</p>
+        </article>
+    </section>
+
+    <!-- БІЧНА ПАНЕЛЬ -->
+    <aside>
+        <h2>Додаткова інформація</h2>
+
+        <!-- Соц мережі -->
+        <section>
+            <h3>Соціальні мережі</h3>
+            <ul>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Twitter</a></li>
+            </ul>
+        </section>
+
+        <!-- Інфо -->
+        <section>
+            <h3>Корисна інформація</h3>
+            <p>Тут може бути реклама або додаткові матеріали.</p>
+        </section>
+    </aside>
+
+</main>
+
+<!-- ПІДВАЛ -->
+<footer>
+    <h2>Контакти</h2>
+    <p>Email: example@gmail.com</p>
+    <p>Телефон: +380000000000</p>
+    <p>&copy; 2026 Мій сайт</p>
+</footer>
+
+</body>
+</html>

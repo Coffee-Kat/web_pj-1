@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Адаптивна навігація</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #1e1e1e;
+    color: white;
+}
+
+/* NAV */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2c2c2c;
+    padding: 10px 20px;
+}
+
+/* Лого */
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Меню */
+.menu {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.menu li {
+    position: relative;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+}
+
+/* Hover */
+.menu a:hover {
+    color: #00bcd4;
+}
+
+/* Активний */
+.active {
+    border-bottom: 2px solid #00bcd4;
+}
+
+/* Підменю */
+.submenu {
+    display: none;
+    position: absolute;
+    background: #333;
+    top: 30px;
+    left: 0;
+}
+
+.submenu li {
+    padding: 5px 10px;
+}
+
+.menu li:hover .submenu {
+    display: block;
+}
+
+/* Пошук */
+.search input {
+    padding: 5px;
+}
+
+/* Бургер */
+.burger {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: #2c2c2c;
+    }
+
+    .menu.active {
+        display: flex;
+    }
+
+    .burger {
+        display: block;
+    }
+
+    .search {
+        margin-top: 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+
+    <div class="logo">LOGO</div>
+
+    <div class="burger" id="burger">☰</div>
+
+    <ul class="menu" id="menu">
+        <li><a href="#" class="active">Головна</a></li>
+        <li><a href="#">Про нас</a></li>
+
+        <li>
+            <a href="#">Послуги</a>
+            <ul class="submenu">
+                <li><a href="#">Веб</a></li>
+                <li><a href="#">Дизайн</a></li>
+            </ul>
+        </li>
+
+        <li><a href="#">Контакти</a></li>
+    </ul>
+
+    <div class="search">
+        <input type="text" placeholder="Пошук...">
+    </div>
+
+</nav>
+
+<script>
+
+// Бургер меню
+const burger = document.getElementById('burger');
+const menu = document.getElementById('menu');
+
+burger.onclick = () => {
+    menu.classList.toggle('active');
+};
+
+// Підсвітка активного пункту
+document.querySelectorAll('.menu a').forEach(link => {
+    link.addEventListener('click', function() {
+        document.querySelectorAll('.menu a').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
+// Клавіатура (Enter відкриває меню)
+burger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        menu.classList.toggle('active');
+    }
+});
+
+</script>
+
+</body>
+</html>
