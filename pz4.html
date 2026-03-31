@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Інтерактивні елементи</title>
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    padding: 20px;
+    background: #1e1e1e;
+    color: white;
+}
+
+/* Кнопки */
+button {
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+/* Модальне вікно */
+.modal {
+    display: none;
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    background: #2c2c2c;
+    padding: 20px;
+    margin: 10% auto;
+    width: 300px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.active {
+    display: block;
+}
+
+/* Галерея */
+.gallery img {
+    width: 100px;
+    margin: 5px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.gallery img:hover {
+    transform: scale(1.2);
+}
+
+#mainImage {
+    width: 300px;
+    display: block;
+    margin: 10px auto;
+}
+
+/* Меню */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: #333;
+}
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    color: white;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Форма */
+input, textarea {
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px;
+}
+
+.error {
+    border: 2px solid red;
+}
+
+/* Кнопка вверх */
+#topBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Інтерактивні елементи</h1>
+
+<!-- Модальне вікно -->
+<button id="openModal">Відкрити модальне вікно</button>
+
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <p>Це модальне вікно</p>
+        <button id="closeModal">Закрити</button>
+    </div>
+</div>
+
+<!-- Форма -->
+<h2>Форма зворотного зв'язку</h2>
+<form id="form">
+    <input type="text" id="name" placeholder="Ім'я">
+    <input type="email" id="email" placeholder="Email">
+    <textarea id="message" placeholder="Повідомлення"></textarea>
+    <button type="submit">Відправити</button>
+</form>
+<p id="formMsg"></p>
+
+<!-- Галерея -->
+<h2>Галерея</h2>
+<img id="mainImage" src=".\assets\test_1.jpg">
+<div class="gallery">
+    <img src="assets\sub-test_1.webp" class="thumb">
+    <img src="assets\sub-test_2.webp" class="thumb">
+    <img src="assets\sub-test_3.png" class="thumb">
+</div>
+
+<!-- Випадаюче меню -->
+<h2>Меню</h2>
+<div class="dropdown">
+    <button>Меню</button>
+    <div class="dropdown-content">
+        <a href="#">Головна</a>
+        <a href="#">Послуги</a>
+        <a href="#">Контакти</a>
+    </div>
+</div>
+
+<!-- Кнопка вверх -->
+<button id="topBtn">↑</button>
+
+<script>
+
+// Модальне вікно
+const modal = document.getElementById('modal');
+document.getElementById('openModal').onclick = () => modal.classList.add('active');
+document.getElementById('closeModal').onclick = () => modal.classList.remove('active');
+
+// Закриття по кліку поза вікном
+window.onclick = (e) => {
+    if (e.target == modal) modal.classList.remove('active');
+};
+
+// Галерея
+const mainImage = document.getElementById('mainImage');
+document.querySelectorAll('.thumb').forEach(img => {
+    img.onclick = () => mainImage.src = img.src;
+});
+
+// Форма + валідація
+const form = document.getElementById('form');
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    let valid = true;
+    const name = document.getElementById('name');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
+
+    [name, email, message].forEach(input => input.classList.remove('error'));
+
+    if (name.value === "") {
+        name.classList.add('error');
+        valid = false;
+    }
+
+    if (!email.value.includes("@")) {
+        email.classList.add('error');
+        valid = false;
+    }
+
+    if (message.value === "") {
+        message.classList.add('error');
+        valid = false;
+    }
+
+    document.getElementById('formMsg').textContent =
+        valid ? "Успішно відправлено!" : "Помилка заповнення!";
+});
+
+// Кнопка вверх
+const topBtn = document.getElementById('topBtn');
+
+window.onscroll = () => {
+    topBtn.style.display = window.scrollY > 200 ? "block" : "none";
+};
+
+topBtn.onclick = () => window.scrollTo({top:0, behavior:"smooth"});
+
+</script>
+
+</body>
+</html>
