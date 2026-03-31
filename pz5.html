@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Валідація форми</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #1e1e1e;
+    color: white;
+    padding: 20px;
+}
+
+form {
+    max-width: 400px;
+    margin: auto;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+.success {
+    color: lightgreen;
+}
+
+.invalid {
+    border: 2px solid red;
+}
+
+.valid {
+    border: 2px solid green;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Реєстрація</h1>
+
+<form id="registrationForm">
+
+    <label>Ім'я користувача:</label>
+    <input type="text" id="username">
+    <div class="error" id="usernameError"></div>
+
+    <label>Email:</label>
+    <input type="text" id="email">
+    <div class="error" id="emailError"></div>
+
+    <label>Пароль:</label>
+    <input type="password" id="password">
+    <div class="error" id="passwordError"></div>
+
+    <label>Підтвердження паролю:</label>
+    <input type="password" id="confirmPassword">
+    <div class="error" id="confirmPasswordError"></div>
+
+    <label>Телефон:</label>
+    <input type="text" id="phone">
+    <div class="error" id="phoneError"></div>
+
+    <label>Дата народження:</label>
+    <input type="date" id="birthdate">
+    <div class="error" id="birthdateError"></div>
+
+    <label>
+        <input type="checkbox" id="agree"> Я погоджуюсь з умовами
+    </label>
+    <div class="error" id="agreeError"></div>
+
+    <button type="submit">Зареєструватися</button>
+
+    <p id="result"></p>
+
+</form>
+
+<script>
+
+document.getElementById('registrationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    let valid = true;
+
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    const phone = document.getElementById('phone');
+    const birthdate = document.getElementById('birthdate');
+    const agree = document.getElementById('agree');
+
+    // Очистка
+    document.querySelectorAll('.error').forEach(e => e.textContent = "");
+    document.querySelectorAll('input').forEach(i => i.classList.remove('invalid','valid'));
+
+    // Username
+    if (username.value.trim() === "") {
+        setError(username, "Введіть ім'я");
+        valid = false;
+    } else setSuccess(username);
+
+    // Email
+    const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+    if (!emailPattern.test(email.value)) {
+        setError(email, "Невірний email");
+        valid = false;
+    } else setSuccess(email);
+
+    // Password
+    const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordPattern.test(password.value)) {
+        setError(password, "Мін 8 символів, велика літера і цифра");
+        valid = false;
+    } else setSuccess(password);
+
+    // Confirm Password
+    if (confirmPassword.value !== password.value || confirmPassword.value === "") {
+        setError(confirmPassword, "Паролі не співпадають");
+        valid = false;
+    } else setSuccess(confirmPassword);
+
+    // Phone
+    const phonePattern = /^\+?\d{10,13}$/;
+    if (!phonePattern.test(phone.value)) {
+        setError(phone, "Невірний номер");
+        valid = false;
+    } else setSuccess(phone);
+
+    // Age 18+
+    if (!birthdate.value || getAge(birthdate.value) < 18) {
+        setError(birthdate, "Вам має бути 18+");
+        valid = false;
+    } else setSuccess(birthdate);
+
+    // Checkbox
+    if (!agree.checked) {
+        document.getElementById('agreeError').textContent = "Потрібна згода";
+        valid = false;
+    }
+
+    document.getElementById('result').textContent =
+        valid ? "Реєстрація успішна!" : "Є помилки у формі";
+});
+
+// Функції
+function setError(input, message) {
+    input.classList.add('invalid');
+    document.getElementById(input.id + "Error").textContent = message;
+}
+
+function setSuccess(input) {
+    input.classList.add('valid');
+}
+
+function getAge(date) {
+    const today = new Date();
+    const birth = new Date(date);
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    return age;
+}
+
+</script>
+
+</body>
+</html>
