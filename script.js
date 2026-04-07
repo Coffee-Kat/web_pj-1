@@ -1,5 +1,25 @@
-const hero = document.querySelector(".hero")
-const select = document.querySelector(".game-select")
+const $ = s => document.querySelector(s)
+
+const hero = $(".hero")
+const select = $(".game-select")
+
+const tournamentsContainer = $(".tournaments")
+const teamsContainer = $(".teams")
+const bracketContainer = $(".bracket")
+
+const adminPanel = $(".admin")
+const loginModal = $(".login-modal")
+
+const logoutBtn = $(".logout-btn")
+
+const inputs = {
+    name: $(".name"),
+    game: $(".game"),
+    date: $(".date"),
+    format: $(".format"),
+    prize: $(".prize"),
+    teams: $(".teams-input")
+}
 
 const backgrounds = {
     Valorant: "url('assets/valorant_hero-bg.jpg')",
@@ -7,82 +27,131 @@ const backgrounds = {
     Minecraft: "url('assets/minecraft_hero-bg.png')"
 }
 
-select.addEventListener("change", () => {
-    hero.style.background =
-    "linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), " + backgrounds[select.value] + " center/cover"
-})
+let tournaments = JSON.parse(localStorage.getItem("tournaments")) || []
+let editIndex = null
 
-let tournaments = []
-
-document.querySelector(".create-btn").addEventListener("click", createTournament)
-document.querySelector(".scroll-btn").addEventListener("click", scrollToTournaments)
-document.querySelector(".register-btn").addEventListener("click", register)
-
-function createTournament() {
-    const tournament = {
-        name: document.querySelector(".name").value,
-        game: document.querySelector(".game").value,
-        date: document.querySelector(".date").value,
-        format: document.querySelector(".format").value,
-        prize: document.querySelector(".prize").value,
-        teams: document.querySelector(".teams-input").value.split(",")
-    }
-
-    tournaments.push(tournament)
-
-    renderTournaments()
-    renderTeams(tournament.teams)
-    generateBracket(tournament.teams)
+// BG
+select.onchange = () => {
+    hero.style.background = `
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    ${backgrounds[select.value]} center/cover`
 }
 
-function renderTournaments() {
-    const container = document.querySelector(".tournaments")
-    container.innerHTML = ""
+// AUTH
+const ADMIN_LOGIN = "admin"
+const ADMIN_PASS = "1234"
 
-    tournaments.forEach(t => {
-        container.innerHTML += `
+adminPanel.classList.add("hidden")
+
+if (localStorage.getItem("adminAuth") === "true") {
+    adminPanel.classList.remove("hidden")
+    logoutBtn.classList.remove("hidden")
+}
+
+$(".admin-open-btn").onclick = () =>
+    loginModal.classList.remove("hidden")
+
+$(".login-btn").onclick = () => {
+    if ($(".username").value === ADMIN_LOGIN &&
+        $(".password").value === ADMIN_PASS) {
+
+        localStorage.setItem("adminAuth", "true")
+        loginModal.classList.add("hidden")
+        adminPanel.classList.remove("hidden")
+        logoutBtn.classList.remove("hidden")
+    } else alert("Wrong login")
+}
+
+logoutBtn.onclick = () => {
+    localStorage.removeItem("adminAuth")
+    location.reload()
+}
+
+// CREATE / UPDATE
+$(".create-btn").onclick = () => {
+    const teams = inputs.teams.value
+        .split(",")
+        .map(t => t.trim())
+        .filter(Boolean)
+
+    if (!inputs.name.value || teams.length === 0)
+        return alert("Заповни поля")
+
+    const data = {
+        name: inputs.name.value,
+        game: inputs.game.value,
+        date: inputs.date.value,
+        format: inputs.format.value,
+        prize: inputs.prize.value,
+        teams
+    }
+
+    editIndex !== null
+        ? tournaments[editIndex] = data
+        : tournaments.push(data)
+
+    editIndex = null
+
+    save()
+    render()
+    clearInputs()
+}
+
+// RENDER
+function render() {
+    tournamentsContainer.innerHTML = tournaments.map((t, i) => `
         <div class="card">
             <h3>${t.name}</h3>
             <p>${t.game}</p>
             <p>${t.date}</p>
             <p>${t.format}</p>
             <p>${t.prize}</p>
-            <button class="btn">Join</button>
+            ${isAdmin() ? `
+            <button onclick="edit(${i})" class="btn">Edit</button>
+            <button onclick="remove(${i})" class="btn">Delete</button>` : ""}
         </div>
-        `
+    `).join("")
+}
+
+// ADMIN CHECK
+function isAdmin() {
+    return localStorage.getItem("adminAuth") === "true"
+}
+
+// EDIT
+window.edit = i => {
+    const t = tournaments[i]
+
+    Object.keys(inputs).forEach(k => {
+        inputs[k].value = k === "teams" ? t[k].join(", ") : t[k]
     })
+
+    editIndex = i
 }
 
-function renderTeams(teams) {
-    const container = document.querySelector(".teams")
-    container.innerHTML = ""
-
-    teams.forEach(t => {
-        container.innerHTML += `<div class="card">${t.trim()}</div>`
-    })
+// DELETE
+window.remove = i => {
+    tournaments.splice(i, 1)
+    save()
+    render()
 }
 
-function generateBracket(teams) {
-    const container = document.querySelector(".bracket")
-    container.innerHTML = ""
-
-    for (let i = 0; i < teams.length; i += 2) {
-        const team1 = teams[i] || "TBD"
-        const team2 = teams[i + 1] || "TBD"
-
-        container.innerHTML += `
-        <div class="match">
-            <p>${team1} vs ${team2}</p>
-        </div>
-        `
-    }
+// SAVE
+function save() {
+    localStorage.setItem("tournaments", JSON.stringify(tournaments))
 }
 
-function scrollToTournaments() {
-    document.querySelector(".tournaments-section")
+// CLEAR
+function clearInputs() {
+    Object.values(inputs).forEach(i => i.value = "")
+}
+
+// INIT
+render()
+
+$(".scroll-btn").onclick = () =>
+    $(".tournaments-section")
         .scrollIntoView({ behavior: "smooth" })
-}
 
-function register() {
-    alert("Comming soon...")
-}
+$(".register-btn").onclick = () =>
+    alert("Coming soon...")
