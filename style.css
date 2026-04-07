@@ -1,45 +1,60 @@
 /*Minifyed normalize css*/
 button,hr,input{overflow:visible}progress,sub,sup{vertical-align:baseline}[type=checkbox],[type=radio],legend{box-sizing:border-box;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}details,main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:ButtonText dotted 1px}fieldset{padding:.35em .75em .625em}legend{color:inherit;display:table;max-width:100%;white-space:normal}textarea{overflow:auto}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}[hidden],template{display:none}
 
+@layer base {
+:root {
+    --font-main: Arial, sans-serif;
+
+    --color-bg: #0f1123;
+    --color-surface: #14172b;
+    --color-card: #1c1f3a;
+    --color-accent: #00ffd5;
+    --color-accent-hover: #00c8a8;
+    --color-text: #ffffff;
+    --color-overlay: rgba(0,0,0,0.8);
+
+    --radius: 8px;
+}
+}
+
 body {
     margin: 0;
-    font-family: Arial;
-    background: #0f1123;
-    color: white;
+    font-family: var(--font-main);
+    background: var(--color-bg);
+    color: var(--color-text);
 }
 
-header {
-    padding: 20px;
-    text-align: center;
-}
-
-h1, h2 {
-    letter-spacing: 2px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: var(--color-surface);
 }
 
 .hero {
     height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
     background:
     linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
-    url('https://images.unsplash.com/photo-1542751371-adc38448a05e') center/cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    url('assets/valorant_hero-bg.jpg') center/cover;
 }
 
 .btn {
-    background: #00ffd5;
-    padding: 12px 25px;
-    margin: 10px;
+    background: var(--color-accent);
+    padding: 10px 20px;
     border: none;
+    border-radius: var(--radius);
     cursor: pointer;
-    transition: 0.2s;
 }
 
 .btn:hover {
-    background: #00c8a8;
-    transform: scale(1.05);
+    background: var(--color-accent-hover);
 }
 
 .section {
@@ -48,42 +63,52 @@ h1, h2 {
 }
 
 .tournaments, .teams {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
 }
 
 .card {
-    background: #1c1f3a;
-    margin: 15px;
+    background: var(--color-card);
     padding: 20px;
-    width: 260px;
-    border-radius: 10px;
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.bracket {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    border-radius: var(--radius);
 }
 
 .match {
-    background: #2a2d4a;
+    background: var(--color-card);
     margin: 10px;
     padding: 10px;
-    border-radius: 8px;
 }
 
-input, textarea, select {
+.input {
+    display: block;
+    margin: 10px auto;
     padding: 10px;
     width: 250px;
-    border-radius: 6px;
+    border-radius: var(--radius);
     border: none;
+}
+
+.admin-open-btn {
+    cursor: pointer;
+}
+
+.login-modal {
+    position: fixed;
+    inset: 0;
+    background: var(--color-overlay);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.login-box {
+    background: var(--color-card);
+    padding: 30px;
 }
 
 .footer {
