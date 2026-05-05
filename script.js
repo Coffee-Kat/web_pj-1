@@ -1,15 +1,27 @@
+function showToast(message, type = "success") {
+    const toast = document.createElement("div")
+    toast.className = `toast ${type}`
+    toast.textContent = message
+
+    document.body.appendChild(toast)
+
+    setTimeout(() => toast.classList.add("show"), 10)
+
+    setTimeout(() => {
+        toast.classList.remove("show")
+        setTimeout(() => toast.remove(), 300)
+    }, 3000)
+}
+
 const $ = s => document.querySelector(s)
 
 const hero = $(".hero")
 const select = $(".game-select")
 
 const tournamentsContainer = $(".tournaments")
-const teamsContainer = $(".teams")
-const bracketContainer = $(".bracket")
 
 const adminPanel = $(".admin")
 const loginModal = $(".login-modal")
-
 const logoutBtn = $(".logout-btn")
 
 const inputs = {
@@ -52,14 +64,25 @@ $(".admin-open-btn").onclick = () =>
     loginModal.classList.remove("hidden")
 
 $(".login-btn").onclick = () => {
-    if ($(".username").value === ADMIN_LOGIN &&
-        $(".password").value === ADMIN_PASS) {
-
+    if (
+        $(".username").value === ADMIN_LOGIN &&
+        $(".password").value === ADMIN_PASS
+    ) {
         localStorage.setItem("adminAuth", "true")
         loginModal.classList.add("hidden")
         adminPanel.classList.remove("hidden")
         logoutBtn.classList.remove("hidden")
-    } else alert("Wrong login")
+
+        showToast("Успішний вхід", "success")
+    } else {
+        showToast("Невірний логін або пароль", "error")
+    }
+}
+
+loginModal.onclick = (e) => {
+    if (e.target === loginModal) {
+        loginModal.classList.add("hidden")
+    }
 }
 
 logoutBtn.onclick = () => {
@@ -86,9 +109,11 @@ $(".create-btn").onclick = () => {
         teams
     }
 
-    editIndex !== null
-        ? tournaments[editIndex] = data
-        : tournaments.push(data)
+    if (editIndex !== null) {
+        tournaments[editIndex] = data
+    } else {
+        tournaments.push(data)
+    }
 
     editIndex = null
 
@@ -107,8 +132,9 @@ function render() {
             <p>${t.format}</p>
             <p>${t.prize}</p>
             ${isAdmin() ? `
-            <button onclick="edit(${i})" class="btn">Edit</button>
-            <button onclick="remove(${i})" class="btn">Delete</button>` : ""}
+                <button onclick="edit(${i})" class="btn">Edit</button>
+                <button onclick="remove(${i})" class="btn">Delete</button>
+            ` : ""}
         </div>
     `).join("")
 }
@@ -123,7 +149,8 @@ window.edit = i => {
     const t = tournaments[i]
 
     Object.keys(inputs).forEach(k => {
-        inputs[k].value = k === "teams" ? t[k].join(", ") : t[k]
+        inputs[k].value =
+            k === "teams" ? t[k].join(", ") : t[k]
     })
 
     editIndex = i
@@ -155,3 +182,47 @@ $(".scroll-btn").onclick = () =>
 
 $(".register-btn").onclick = () =>
     alert("Coming soon...")
+
+const adminDropdown = document.querySelector(".admin-dropdown")
+
+// відкриття
+document.querySelector(".admin-open-btn").onclick = () => {
+    if (isAdmin()) {
+        adminDropdown.classList.toggle("hidden")
+    } else {
+        loginModal.classList.remove("hidden")
+    }
+}
+
+// після логіну
+if (localStorage.getItem("adminAuth") === "true") {
+    adminDropdown.classList.remove("hidden")
+}
+
+const loginDropdown = document.querySelector(".login-dropdown")
+
+document.querySelector(".admin-open-btn").onclick = () => {
+    if (isAdmin()) {
+        adminDropdown.classList.toggle("hidden")
+    } else {
+        loginDropdown.classList.toggle("hidden")
+    }
+}
+
+// після логіну
+$(".login-btn").onclick = () => {
+    if (
+        $(".username").value === ADMIN_LOGIN &&
+        $(".password").value === ADMIN_PASS
+    ) {
+        localStorage.setItem("adminAuth", "true")
+
+        loginDropdown.classList.add("hidden")
+        adminDropdown.classList.remove("hidden")
+        logoutBtn.classList.remove("hidden")
+
+        showToast("Успішний вхід")
+    } else {
+        showToast("Невірний логін або пароль", "error")
+    }
+}
