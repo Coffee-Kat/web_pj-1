@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Esports Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -12,8 +13,34 @@
 <header class="header">
     <h2>ESPORTS HUB</h2>
     <div>
-        <button class="admin-open-btn">Admin</button>
+        <button class="btn admin-open-btn">Admin</button>
+            <div class="admin-dropdown hidden">
+                <div class="admin-box">
+                    <h3>Admin Panel</h3>
+
+                    <input class="input name" placeholder="Tournament name">
+                    <select class="input game">
+                        <option>Valorant</option>
+                        <option>CS2</option>
+                        <option>Minecraft</option>
+                    </select>
+                    <input class="input date" type="date">
+                    <input class="input format" placeholder="1v1 / 5v5">
+                    <input class="input prize" placeholder="Prize">
+                    <textarea class="input teams-input" placeholder="Teams (через кому)"></textarea>
+
+                    <button class="btn create-btn">Create / Update</button>
+                </div>
+            </div>
         <button class="btn logout-btn hidden">Logout</button>
+            <div class="login-dropdown hidden">
+                <div class="login-box">
+                    <h3>Admin Login</h3>
+                    <input class="input username" placeholder="Login">
+                    <input class="input password" type="password" placeholder="Password">
+                    <button class="btn login-btn">Увійти</button>
+                </div>
+            </div>
     </div>
 </header>
 
@@ -67,8 +94,8 @@
 <div class="login-modal hidden">
     <div class="login-box">
         <h2>Admin Login</h2>
-        <input class="login-input username" placeholder="Login">
-        <input class="login-input password" type="password" placeholder="Password">
+        <input class="input username" placeholder="Login">
+        <input class="input password" type="password" placeholder="Password">
         <button class="btn login-btn">Увійти</button>
     </div>
 </div>
@@ -77,6 +104,6 @@
     <p>© 2026 Esports Platform</p>
 </footer>
 
-<script src="script.js"></script>
 </body>
+<script src="script.js"></script>
 </html>
