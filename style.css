@@ -3,33 +3,38 @@ button,hr,input{overflow:visible}progress,sub,sup{vertical-align:baseline}[type=
 
 @layer base {
 :root {
-    --font-main: Arial, sans-serif;
-
-    --color-bg: #0f1123;
-    --color-surface: #14172b;
-    --color-card: #1c1f3a;
-    --color-accent: #00ffd5;
-    --color-accent-hover: #00c8a8;
-    --color-text: #ffffff;
-    --color-overlay: rgba(0,0,0,0.8);
-
-    --radius: 8px;
+    --bg: #0b0e1a;
+    --surface: #12162a;
+    --card: #1a1f3a;
+    --accent: #00ffd5;
+    --accent-soft: rgba(0,255,213,0.15);
+    --text: #ffffff;
+    --text-muted: #9aa0b5;
+    --radius: 12px;
 }
 }
+
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
-    font-family: var(--font-main);
-    background: var(--color-bg);
-    color: var(--color-text);
+    font-family: 'Montserrat', sans-serif;
+    background: radial-gradient(circle at top, #141a33, #0b0e1a);
+    color: var(--text);
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
-    background: var(--color-surface);
+    padding: 20px 40px;
+    background: rgba(18,22,42,0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.header h2 {
+    letter-spacing: 2px;
 }
 
 .hero {
@@ -38,80 +43,187 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
+    text-align: center;
 
     background:
-    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+    linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
     url('assets/valorant_hero-bg.jpg') center/cover;
 }
 
+.hero h1 {
+    font-size: 48px;
+    margin: 0;
+}
+
+select {
+    padding: 10px 15px;
+    border-radius: var(--radius);
+    border: none;
+    background: var(--card);
+    color: white;
+}
+
 .btn {
-    background: var(--color-accent);
-    padding: 10px 20px;
+    background: linear-gradient(135deg, #00ffd5, #00c8a8);
+    padding: 12px 25px;
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+    box-shadow: 0 0 15px var(--accent-soft);
 }
 
 .btn:hover {
-    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px var(--accent-soft);
 }
 
-.section {
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.tournaments, .teams {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    background: var(--color-card);
-    padding: 20px;
-    border-radius: var(--radius);
-}
-
-.match {
-    background: var(--color-card);
-    margin: 10px;
-    padding: 10px;
-}
-
-.input {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 250px;
-    border-radius: var(--radius);
-    border: none;
-}
-
-.admin-open-btn {
-    cursor: pointer;
-}
-
-.login-modal {
-    position: fixed;
-    inset: 0;
-    background: var(--color-overlay);
+.hero-buttons {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 15px;
 }
 
 .hidden {
     display: none !important;
 }
 
-.login-box {
-    background: var(--color-card);
-    padding: 30px;
+.toast {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    background: #1a1f3a;
+    color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: 0.3s;
+    z-index: 9999;
 }
 
-.footer {
-    text-align: center;
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.success {
+    border-left: 4px solid #00ffd5;
+}
+
+.toast.error {
+    border-left: 4px solid #ff4d6d;
+}
+
+.section {
+    padding: 60px 40px;
+}
+
+.section h2 {
+    margin-bottom: 25px;
+    font-size: 28px;
+    border-left: 4px solid var(--accent);
+    padding-left: 10px;
+}
+
+/* tournaments grid */
+.tournaments {
+    word-break: break-all;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* card style */
+.card {
+    background: var(--card);
     padding: 20px;
+    border-radius: var(--radius);
+    transition: 0.25s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(0,255,213,0.15);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.card p {
+    color: var(--text-muted);
+    margin: 5px 0;
+}
+
+/* bracket placeholder */
+.bracket {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 30px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* teams list */
+.teams {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.team {
+    background: var(--card);
+    padding: 10px 15px;
+    border-radius: 999px;
+    font-size: 14px;
+}
+
+.admin-dropdown {
+    position: absolute;
+    top: 80px;
+    right: 40px;
+    width: 320px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.admin-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input {
+    padding: 10px;
+    border-radius: var(--radius);
+    border: none;
+    background: var(--card);
+    color: white;
+}
+
+.teams-input {
+    max-width: 100%;
+    min-width: 100%;
+    min-height: fit-content;
+}
+
+.login-dropdown {
+    position: absolute;
+    top: 80px;
+    right: 40px;
+    width: 250px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    z-index: 1000;
 }
